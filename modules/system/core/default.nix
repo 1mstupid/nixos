@@ -4,6 +4,7 @@
       user
       bootloader
       settings
+      nix-ld
       hardware
       locale
     ];

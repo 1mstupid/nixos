@@ -44,13 +44,6 @@
       owner = "1mstupid";
       repo = "mpv";
     };
-    sls-steam.url = "github:AceSLS/SLSsteam";
-    zapfast = {
-      type = "github";
-      owner = "crmne";
-      repo = "zapfast";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     helium-flake = {
       type = "github";
       owner = "oxcl";
