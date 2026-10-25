@@ -1,1 +1,1 @@
-NixOS config, this is not for mere mortals.
+This is not for mere mortals.
