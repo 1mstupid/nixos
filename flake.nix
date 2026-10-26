@@ -1,79 +1,34 @@
 {
-  description = "You're dead.";
+  description = "I'm going to kill myself";
+
   inputs = {
-    # system
-    nixpkgs = {
-      type = "github";
-      owner = "nixos";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
-    nixpkgs-unstable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
-    nix-cachyos-kernel = {
-      type = "github";
-      owner = "xddxdd";
-      repo = "nix-cachyos-kernel";
-      ref = "release";
-      flake = true;
-    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
-    # applications
-    umbriel-config = {
-      type = "github";
-      owner = "1mstupid";
-      repo = "umbriel-config";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     umbriel = {
-      url = "github:noctalia-dev/umbriel";
+      url = "github:1mstupid/umbriel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
-      type = "github";
-      owner = "1mstupid";
-      repo = "quickshell-config";
-      flake = false;
-    };
-    mpv = {
-      type = "github";
-      owner = "1mstupid";
-      repo = "mpv";
-    };
+    quickshell.url = "github:1mstupid/quickshell";
+    quickshell.flake = false;
+    mpv.url = "github:1mstupid/mpv";
+    mpv.flake = false;
     helium-flake = {
-      type = "github";
-      owner = "oxcl";
-      repo = "nix-flake-helium-browser";
+      url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ayugram-desktop = {
-      type = "git";
-      submodules = true;
-      url = "https://github.com/ndfined-crp/ayugram-desktop/";
     };
 
-    # flake-parts 
-    flake-parts = {
-      type = "github";
-      owner = "hercules-ci";
-      repo = "flake-parts";
+    ayugram-desktop = {
+      url = "git+https://github.com/ndfined-crp/ayugram-desktop?submodules=1";
     };
-    wrappers = {
-      type = "github";
-      owner = "BirdeeHub";
-      repo = "nix-wrapper-modules";
-    };
-    import-tree = {
-      type = "github";
-      owner = "denful";
-      repo = "import-tree";
-    }; 
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    import-tree.url = "github:denful/import-tree";
   };
+
   outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;}
+    inputs.flake-parts.lib.mkFlake { inherit inputs; }
       (inputs.import-tree ./modules);
 }

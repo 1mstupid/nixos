@@ -6,8 +6,6 @@
       hostName = "waltz";
     };
     environment.systemPackages = with pkgs; [
-      librewolf-bin
-			cinny-desktop
     ];
   };
 }

@@ -3,11 +3,11 @@
   moduleWithSystem,
   ...
 }: {
-  flake.nixosModules.ent = moduleWithSystem ({pkgs, ...}: let
+  flake.nixosModules.media = moduleWithSystem ({pkgs, ...}: let
     modules = with self.nixosModules; [
       ncmpcpp
       mpv
-      media
+      entertainment
     ];
   in {
     imports = modules;

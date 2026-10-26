@@ -9,14 +9,12 @@
       core
       i2pd
       desktop
-      kmonad
       desktopConfig
       amdDrivers
       coding
-      ent
-      steam
+      media
       studies
-      comms
+      apps
       scripts
       sddm-autologin
     ];

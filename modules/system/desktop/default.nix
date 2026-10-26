@@ -6,10 +6,8 @@
   flake.nixosModules.desktop = moduleWithSystem ({pkgs, ...}: let
     modules = with self.nixosModules; [
       network
-      quickshell
       sessions
       audio
-      helium
       umbriel
       sddm
       network

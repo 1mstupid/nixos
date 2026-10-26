@@ -3,7 +3,7 @@
   inputs,
   ...
 }: {
-  flake.nixosModules.systemTheme = {
+  flake.nixosModules.theme = {
     config,
     pkgs,
     lib,

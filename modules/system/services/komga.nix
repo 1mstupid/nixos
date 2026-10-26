@@ -1,6 +1,6 @@
 
 {...}: {
-  flake.nixosModules.media = { config, lib, pkgs, ... }:
+  flake.nixosModules.entertainment = { config, lib, pkgs, ... }:
   let
     mediaGroup = "media";
 

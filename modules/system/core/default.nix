@@ -2,7 +2,9 @@
   flake.nixosModules.core = {pkgs, ...}: let
     modules = with self.nixosModules; [
       user
+      variables
       bootloader
+      theme
       settings
       nix-ld
       hardware

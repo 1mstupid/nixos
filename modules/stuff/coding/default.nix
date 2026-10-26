@@ -8,7 +8,9 @@
       git
       tmux
       hx
+      nix-ld
       alacritty
+      kmonad
     ];
   in {
     imports = modules;
