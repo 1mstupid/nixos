@@ -10,27 +10,18 @@
       ];
     }
   );
-
-  perSystem = {pkgs, ...}: {
-    packages.mpv = inputs.wrappers.wrappers.mpv.wrap {
-      inherit pkgs;
-
-      configDir = {
-        mpv = {
-          enable = true;
-          path = "${inputs.mpv}/mpv.conf";
-        };
-
-        input = {
-          enable = true;
-          path = "${inputs.mpv}/input.conf";
-        };
-      };
-
-      runtimePkgs = with pkgs; [
-        yt-dlp
-        ffmpeg
-      ];
+  perSystem = {pkgs, ...}: let
+    mpvConfig = inputs.mpv;   # flake = false, the cleaned config repo
+  in {
+    packages.mpv = pkgs.symlinkJoin {
+      name = "mpv";
+      paths = [pkgs.mpv];
+      nativeBuildInputs = [pkgs.makeWrapper];
+      postBuild = ''
+        wrapProgram $out/bin/mpv \
+          --add-flags "--config-dir=${mpvConfig}" \
+          --prefix PATH : ${pkgs.lib.makeBinPath [pkgs.yt-dlp pkgs.ffmpeg]}
+      '';
     };
   };
 }

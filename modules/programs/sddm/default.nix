@@ -8,7 +8,7 @@
     lib,
     ...
   }:let
-      samaritan-sddm = pkgs.callPackage ../../../extras/samaritan-sddm.nix { };
+      samaritan-sddm = pkgs.callPackage ./samaritan-sddm.nix { };
     in
     {
     environment.systemPackages = [
