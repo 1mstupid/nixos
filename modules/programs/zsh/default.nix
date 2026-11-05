@@ -24,9 +24,8 @@
 
       homeDirectory = "/home/waltz";
       sessionVariables = {
-        NH_FLAKE = "/home/waltz/Projects/nixos";
-        EDITOR = "hx";
-        VISUAL = "hx";
+        EDITOR = "nvim";
+        VISUAL = "nvim";
         BROWSER = "helium";
       };
       sessionVariablesZsh =
@@ -44,20 +43,20 @@
         lg = lib.getExe pkgs.lazygit;
         man = "man -P \"${lib.getExe pkgs.bat} -p\"";
         config = "hx ~/dotfiles/hosts/waltz/configuration.nix";
+        v = "nvim";
         ns = "nix search nixpkgs";
         nsh = "nix-shell -p";
         hm = "hx ~/dotfiles/modules/home/home.nix";
         flake = "hx ~/dotfiles/flake.nix";
         br = lib.getExe pkgs.broot;
-        rebuild = "nh os switch --impure .#nixos-btw";
-      };
+        rebuild = "cd ~/Projects/nixos 2>/dev/null && nh os switch --impure .#nixos-btw";      };
 
       zshrc.content = ''
         ${sessionVariablesZsh}
 
         setopt autocd
 
-        export NH_FLAKE="~/Projects/nixos"
+        export NH_FLAKE="${homeDirectory}/Projects/nixos"
         export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
         export PATH="${homeDirectory}/.cargo/bin:${homeDirectory}/.local/bin:$PATH"
 

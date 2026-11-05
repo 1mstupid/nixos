@@ -6,8 +6,8 @@
     let
       config = pkgs.writeText "ncmpcpp.conf" ''
         # dir
-        ncmpcpp_directory = ~/.config/ncmpcpp
-        lyrics_directory  = ~/.local/share/lyrics
+        ncmpcpp_directory = ~/.local/share/ncmpcpp
+        lyrics_directory  = ~/.local/share/ncmpcpp/lyrics
         mpd_music_dir     = ~/Music
 
         # behaviour

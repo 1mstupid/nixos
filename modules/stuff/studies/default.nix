@@ -10,6 +10,7 @@
   in {
     imports = modules;
     environment.systemPackages = with pkgs; [
+      readest
       (symlinkJoin {
           name = "sioyek";
           paths = [ sioyek ];

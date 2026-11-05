@@ -5,9 +5,9 @@
 }: {
   flake.nixosModules.media = moduleWithSystem ({pkgs, ...}: let
     modules = with self.nixosModules; [
-      ncmpcpp
+      mpd
+      kew
       mpv
-      entertainment
     ];
   in {
     imports = modules;

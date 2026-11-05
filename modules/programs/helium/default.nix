@@ -9,13 +9,7 @@
     programs.helium = {
       enable = true;
 
-      package = inputs.helium-flake.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
-        preFixup = old.preFixup + ''
-          gappsWrapperArgs+=(
-            --set XDG_CONFIG_HOME "/home/waltz/.local/share/helium"
-          )
-        '';
-      });
+      package = inputs.helium-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
       flags = [
         "--user-data-dir=/home/waltz/.local/share/helium"
@@ -31,7 +25,6 @@
           "hfjbmagddngcpeloejdejnfgbamkjaeg"
           "eimadpbcbfnmbkopoojfekhnkhdbieeh"
           "imnffafnaoooaedkhappfhomnnpigogk"
-          "blaaajhemilngeeffpbfkdjjoefldkok"
           "nngceckbapebfimnlniiiahkandclblb"
         ];
       };

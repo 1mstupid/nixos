@@ -12,10 +12,13 @@
   );
   perSystem = {pkgs, ...}: let
     mpvConfig = inputs.mpv;   # flake = false, the cleaned config repo
+    mpvWithScripts = pkgs.mpv.override {
+      scripts = [pkgs.mpvScripts.mpris];
+    };
   in {
     packages.mpv = pkgs.symlinkJoin {
       name = "mpv";
-      paths = [pkgs.mpv];
+      paths = [mpvWithScripts];
       nativeBuildInputs = [pkgs.makeWrapper];
       postBuild = ''
         wrapProgram $out/bin/mpv \

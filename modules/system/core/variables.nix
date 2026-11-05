@@ -2,6 +2,7 @@
 {
   flake.nixosModules.variables = {pkgs, ...}: {
     environment.sessionVariables.GH_CONFIG_DIR = "$HOME/.local/state/gh";
+    environment.sessionVariables.NH_FLAKE = "$HOME/Projects/nixos";
     environment.sessionVariables.PULSE_COOKIE = "$HOME/.cache/pulse-cookie";
     xdg.mime = {
       enable = true;

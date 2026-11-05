@@ -5,11 +5,12 @@
 }: {
   flake.nixosModules.desktop = moduleWithSystem ({pkgs, ...}: let
     modules = with self.nixosModules; [
-      network
+      services
       sessions
+      core
+      nix-ld
+      theme
       audio
-      umbriel
-      sddm
       network
     ];
   in {
@@ -22,6 +23,7 @@
       zenity
       slurp
       wl-clipboard
+      cliphist
       wlsunset
     ];
   });

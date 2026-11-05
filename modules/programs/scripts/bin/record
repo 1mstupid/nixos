@@ -5,20 +5,24 @@ set -e
 OUTPUT_DIR="$HOME/Videos/recordings"
 mkdir -p "$OUTPUT_DIR"
 
+# If wf-recorder is running, stop it and exit.
+if pgrep -x wf-recorder >/dev/null; then
+    pkill -INT -x wf-recorder
+    echo "Recording stopped."
+    exit 0
+fi
+
 FILE="$OUTPUT_DIR/recording-$(date '+%Y-%m-%d_%H-%M-%S').mp4"
 
 # Get the current default output sink.
 SINK="$(pactl get-default-sink)"
 
-# Capture the monitor of that sink (i.e. exactly what you hear).
+# Capture the monitor of that sink.
 MONITOR="${SINK}.monitor"
 
 echo "Output sink:  $SINK"
 echo "Audio source: $MONITOR"
 echo "Output file:  $FILE"
-echo
-echo "Recording... Press Ctrl+C to stop."
 
-wf-recorder \
-    -a"$MONITOR" \
-    -f "$FILE"
+# Start recording.
+wf-recorder -a"$MONITOR" -f "$FILE"

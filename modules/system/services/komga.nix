@@ -1,30 +1,14 @@
+{ ... }: {
+  flake.nixosModules.komga = { ... }: {
+    users.groups.media = { };
 
-{...}: {
-  flake.nixosModules.entertainment = { config, lib, pkgs, ... }:
-  let
-    mediaGroup = "media";
-
-    mediaRoot = "/srv/media";
-    downloadsRoot = "/srv/downloads";
-
-    komgaDomain = "komga.example.com";
-    qbittorrentDomain = "torrent.example.com";
-  in
-  {
-    users.groups.${mediaGroup} = {};
-
-    users.users.komga.extraGroups = [ mediaGroup ];
-    users.users.qbittorrent.extraGroups = [ mediaGroup ];
+    users.users.komga.extraGroups = [ "media" ];
 
     systemd.tmpfiles.rules = [
-      "d ${mediaRoot}                 2775 root ${mediaGroup} -"
-      "d ${mediaRoot}/books           2775 root ${mediaGroup} -"
-      "d ${mediaRoot}/comics          2775 root ${mediaGroup} -"
-      "d ${mediaRoot}/manga           2775 root ${mediaGroup} -"
-
-      "d ${downloadsRoot}             2775 root ${mediaGroup} -"
-      "d ${downloadsRoot}/incomplete  2775 root ${mediaGroup} -"
-      "d ${downloadsRoot}/complete    2775 root ${mediaGroup} -"
+      "d /srv/media        2775 root media -"
+      "d /srv/media/books  2775 root media -"
+      "d /srv/media/comics 2775 root media -"
+      "d /srv/media/manga  2775 root media -"
     ];
 
     services.komga = {
@@ -36,26 +20,7 @@
       };
     };
 
-    services.qbittorrent = {
-      enable = true;
-      webuiPort = 8080;
-
-      serverConfig = {
-        Preferences = {
-          WebUI = {
-            LocalHostAuth = false;
-          };
-
-          Downloads = {
-            SavePath = "${downloadsRoot}/complete/";
-            TempPath = "${downloadsRoot}/incomplete/";
-            TempPathEnabled = true;
-          };
-        };
-      };
-    };
     networking.firewall.allowedTCPPorts = [
-      8080
       25600
     ];
   };

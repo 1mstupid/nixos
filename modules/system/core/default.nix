@@ -4,9 +4,7 @@
       user
       variables
       bootloader
-      theme
       settings
-      nix-ld
       hardware
       locale
     ];
