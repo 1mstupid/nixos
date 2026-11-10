@@ -2,9 +2,10 @@
   inputs,
   moduleWithSystem,
   ...
-}: {
+}:
+{
   flake.nixosModules.git = moduleWithSystem (
-    {self'}: {
+    { self' }: {
       programs.git = {
         enable = true;
         package = self'.packages.git;
@@ -12,7 +13,7 @@
     }
   );
 
-  perSystem = {pkgs, ...}: {
+  perSystem = { pkgs, ... }: {
     packages.git = inputs.wrappers.wrappers.git.wrap {
       inherit pkgs;
 

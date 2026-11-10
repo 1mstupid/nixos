@@ -1,5 +1,5 @@
-{...}: {
-  flake.nixosModules.amdDrivers = {pkgs, ...}: {
+{ ... }: {
+  flake.nixosModules.amdDrivers = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [
       mesa
       rocmPackages.rocm-smi

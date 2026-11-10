@@ -1,16 +1,16 @@
-
 {
   inputs,
   moduleWithSystem,
   ...
-}: {
+}:
+{
   flake.nixosModules.mango = moduleWithSystem (
-    {pkgs, self'}: {
+    { pkgs, self' }: {
       config = {
         programs.mango.enable = true;
         # services.displayManager.defaultSession = "mango";
         services.xserver.enable = true;
-  			services.seatd.enable = true;
+        services.seatd.enable = true;
         security.polkit.enable = true;
 
         environment.systemPackages = with pkgs; [
@@ -22,7 +22,7 @@
     }
   );
 
-  perSystem = {pkgs, ...}: {
+  perSystem = { pkgs, ... }: {
     packages.mango =
       let
         mangoConfig = pkgs.writeText "mango.conf" ''
@@ -255,39 +255,39 @@
           exec=awww-daemon
         '';
       in
-        inputs.wrappers.wrappers.mangowc.wrap {
-          inherit pkgs;
+      inputs.wrappers.wrappers.mangowc.wrap {
+        inherit pkgs;
 
-          # Adjust these if the Mango wrapper uses different option names.
-          configFile.path = mangoConfig;
-          prefixContent = [
-            {
-              data = [
-                "XDG_CURRENT_DESKTOP"
-                "mango"
-                ""
-              ];
-            }
-            {
-              data = [
-                "XDG_SESSION_TYPE"
-                "wayland"
-                ""
-              ];
-            }
-            {
-              data = [
-                "XDG_SESSION_DESKTOP"
-                "Mango"
-                ""
-              ];
-            }
-          ];
-          runtimePkgs = [
-            pkgs.awww
-            pkgs.bibata-cursors
-            pkgs.brightnessctl
-          ];
-        };
+        # Adjust these if the Mango wrapper uses different option names.
+        configFile.path = mangoConfig;
+        prefixContent = [
+          {
+            data = [
+              "XDG_CURRENT_DESKTOP"
+              "mango"
+              ""
+            ];
+          }
+          {
+            data = [
+              "XDG_SESSION_TYPE"
+              "wayland"
+              ""
+            ];
+          }
+          {
+            data = [
+              "XDG_SESSION_DESKTOP"
+              "Mango"
+              ""
+            ];
+          }
+        ];
+        runtimePkgs = [
+          pkgs.awww
+          pkgs.bibata-cursors
+          pkgs.brightnessctl
+        ];
+      };
   };
 }

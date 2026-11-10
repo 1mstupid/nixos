@@ -16,9 +16,9 @@
       '';
     in
     {
-    environment.systemPackages = [
+      environment.systemPackages = [
         pkgs.binutils
         scripts
-       ];
+      ];
     };
 }

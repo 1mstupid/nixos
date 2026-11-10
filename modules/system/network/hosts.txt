@@ -1,4 +1,4 @@
-# Title: StevenBlack/hosts extension porn
+# Title: StevenBlack/hosts extension 
 #
 # This hosts file is a merged collection of hosts from reputable sources,
 # with a dash of crowd sourcing via GitHub
@@ -14,20 +14,6 @@
 #
 # ===============================================================
 
-# Custom host records are listed here.
-
-
-# End of custom host records.
-# Title: hostsVN Adult VN
-# Last modified: 24 Oct 2026 22:48 UTC+7
-# Version: 2610242248
-# Blocked: 1.951 domains
-# Only include adult domains (Vietnamese language)
-# Homepage: https://bigdargon.github.io/hostsVN/
-# GitHub: https://github.com/bigdargon/hostsVN
-# Report issues: https://github.com/bigdargon/hostsVN/issues
-# Download: https://github.com/bigdargon/hostsVN/raw/master/extensions/adult/hosts-VN
-#
 # =====================================================
 0.0.0.0 0310love.com
 0.0.0.0 1001truyen.blogspot.com
@@ -76579,6 +76565,9 @@
 0.0.0.0 pornworks.com
 0.0.0.0 seduced.com
 0.0.0.0 redgifs.ai
+0.0.0.0 redlib.catsarch.com
+0.0.0.0 safereddit.com
+0.0.0.0 www.youtube.com
 0.0.0.0 trashyneverclassy.com
 0.0.0.0 chomikuj.pl
 0.0.0.0 missav.ai

@@ -1,6 +1,6 @@
-{...}:
+{ ... }:
 {
-  flake.nixosModules.mobileConfig = {pkgs, ...}: {
+  flake.nixosModules.mobileConfig = { pkgs, ... }: {
     networking = {
       interfaces.enp5s0.wakeOnLan.enable = true;
       hostName = "waltz";

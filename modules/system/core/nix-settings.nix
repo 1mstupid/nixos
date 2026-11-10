@@ -1,6 +1,6 @@
-{inputs, ...}:
+{ inputs, ... }:
 {
-  perSystem = {system, ...}: {
+  perSystem = { system, ... }: {
     _module.args = {
       unfreePkgs = import inputs.nixpkgs {
         inherit system;
@@ -14,7 +14,7 @@
     };
   };
 
-  flake.nixosModules.settings = {...}:{
+  flake.nixosModules.settings = { ... }: {
     programs.nh = {
       enable = true;
     };
@@ -36,13 +36,12 @@
         ];
         cores = 6;
         eval-cache = true;
-        nix-path = ["nixpkgs=${inputs.nixpkgs}"];
+        nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
         experimental-features = [
           "nix-command"
           "flakes"
         ];
       };
-
 
       optimise.automatic = true;
 
@@ -66,4 +65,3 @@
     };
   };
 }
-

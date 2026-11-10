@@ -1,18 +1,18 @@
-
 {
   inputs,
   moduleWithSystem,
   ...
-}: {
+}:
+{
   flake.nixosModules.tmux = moduleWithSystem (
-    {self'}: {
+    { self' }: {
       environment.systemPackages = with self'.packages; [
         tmux
       ];
     }
   );
 
-  perSystem = {pkgs, ...}: {
+  perSystem = { pkgs, ... }: {
     packages.tmux =
       let
         tmuxConf = pkgs.writeText "tmux.conf" ''
@@ -141,13 +141,13 @@
           bind-key b set-option status
         '';
       in
-        inputs.wrappers.wrappers.tmux.wrap {
-          inherit pkgs;
+      inputs.wrappers.wrappers.tmux.wrap {
+        inherit pkgs;
 
-          addFlag = [
-            "-f"
-            "${tmuxConf}"
-          ];
-        };
+        addFlag = [
+          "-f"
+          "${tmuxConf}"
+        ];
+      };
   };
 }

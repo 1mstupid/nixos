@@ -1,4 +1,3 @@
-
 { self, inputs, ... }:
 {
   flake.nixosModules.audio = { pkgs, lib, ... }: {
@@ -7,11 +6,12 @@
       mpc
       mpdris2
       playerctl
+      pulseaudio
       pavucontrol
     ];
 
     security.rtkit.enable = true;
-   
+
     services.pipewire = {
       enable = true;
       alsa.enable = true;

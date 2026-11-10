@@ -11,6 +11,7 @@
       url = "github:1mstupid/umbriel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     quickshell.url = "github:1mstupid/quickshell";
     quickshell.flake = false;
     mpv.url = "github:1mstupid/mpv";
@@ -20,8 +21,20 @@
       url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     claude-desktop = {
       url = "github:Realdhiru/claude-desktop-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zapfast = {
+      type = "github";
+      owner = "crmne";
+      repo = "zapfast";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ayugram-desktop = {
@@ -34,7 +47,5 @@
     import-tree.url = "github:denful/import-tree";
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; }
-      (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

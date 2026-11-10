@@ -2,29 +2,38 @@
   inputs,
   moduleWithSystem,
   ...
-}: {
+}:
+{
   flake.nixosModules.mpv = moduleWithSystem (
-    {self'}: {
+    { self' }: {
       environment.systemPackages = with self'.packages; [
         mpv
       ];
     }
   );
-  perSystem = {pkgs, ...}: let
-    mpvConfig = inputs.mpv;   # flake = false, the cleaned config repo
-    mpvWithScripts = pkgs.mpv.override {
-      scripts = [pkgs.mpvScripts.mpris];
+  perSystem =
+    { pkgs, ... }:
+    let
+      mpvConfig = inputs.mpv; # flake = false, the cleaned config repo
+      mpvWithScripts = pkgs.mpv.override {
+        scripts = [ pkgs.mpvScripts.mpris ];
+      };
+    in
+    {
+      packages.mpv = pkgs.symlinkJoin {
+        name = "mpv";
+        paths = [ mpvWithScripts ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/mpv \
+            --add-flags "--config-dir=${mpvConfig}" \
+            --prefix PATH : ${
+              pkgs.lib.makeBinPath [
+                pkgs.yt-dlp
+                pkgs.ffmpeg
+              ]
+            }
+        '';
+      };
     };
-  in {
-    packages.mpv = pkgs.symlinkJoin {
-      name = "mpv";
-      paths = [mpvWithScripts];
-      nativeBuildInputs = [pkgs.makeWrapper];
-      postBuild = ''
-        wrapProgram $out/bin/mpv \
-          --add-flags "--config-dir=${mpvConfig}" \
-          --prefix PATH : ${pkgs.lib.makeBinPath [pkgs.yt-dlp pkgs.ffmpeg]}
-      '';
-    };
-  };
 }

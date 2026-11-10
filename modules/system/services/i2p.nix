@@ -1,5 +1,4 @@
-
-{...}: {
+{ ... }: {
   flake.nixosModules.i2pd = { ... }: {
     containers.i2pd-container = {
       autoStart = true;
