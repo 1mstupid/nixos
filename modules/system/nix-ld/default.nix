@@ -1,6 +1,6 @@
-{ moduleWithSystem, ... }: {
+{moduleWithSystem, ...}: {
   flake.nixosModules.nix-ld = moduleWithSystem (
-    { pkgs, ... }: {
+    {pkgs, ...}: {
       programs = {
         nix-ld = {
           enable = true;
@@ -9,6 +9,7 @@
             stdenv.cc.cc
             zlib
             libusb1
+
             libX11
             libXcursor
             libXrandr
@@ -16,7 +17,11 @@
             libXext
             libxcb
             libxkbcommon
+
             wayland
+
+            dbus
+            zenity
           ];
         };
       };

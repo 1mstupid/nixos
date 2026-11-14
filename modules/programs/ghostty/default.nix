@@ -2,17 +2,16 @@
   inputs,
   moduleWithSystem,
   ...
-}:
-{
+}: {
   flake.nixosModules.ghostty = moduleWithSystem (
-    { self' }: {
-      home.packages = with self'.packages; [
+    {self'}: {
+      environment.systemPackages = with self'.packages; [
         ghostty
       ];
     }
   );
 
-  perSystem = { pkgs, ... }: {
+  perSystem = {pkgs, ...}: {
     packages.ghostty = inputs.wrappers.wrappers.ghostty.wrap {
       inherit pkgs;
 

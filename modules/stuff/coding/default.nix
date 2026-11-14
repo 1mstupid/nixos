@@ -2,23 +2,23 @@
   self,
   moduleWithSystem,
   ...
-}:
-{
+}: {
   flake.nixosModules.coding = moduleWithSystem (
-    { pkgs, inputs', ... }:
-    let
+    {
+      pkgs,
+      inputs',
+      ...
+    }: let
       modules = with self.nixosModules; [
         git
-        tmux
+        zellij
         nvim
         alacritty
         scripts
       ];
-    in
-    {
+    in {
       imports = modules;
       environment.systemPackages = with pkgs; [
-        inputs'.claude-desktop.packages.default
         yazi
         devenv
         gh

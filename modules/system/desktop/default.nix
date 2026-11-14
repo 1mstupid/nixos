@@ -2,11 +2,9 @@
   self,
   moduleWithSystem,
   ...
-}:
-{
+}: {
   flake.nixosModules.desktop = moduleWithSystem (
-    { pkgs, ... }:
-    let
+    {pkgs, ...}: let
       modules = with self.nixosModules; [
         services
         sessions
@@ -16,15 +14,16 @@
         audio
         network
       ];
-    in
-    {
+    in {
       imports = modules;
       environment.systemPackages = with pkgs; [
         feh
         awww
         wf-recorder
-        grim
+        swayidle
+        xdg-desktop-portal
         zenity
+        grim
         slurp
         wl-clipboard
         cliphist

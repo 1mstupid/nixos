@@ -1,0 +1,142 @@
+--- a/gtk/gtksettings.c
++++ b/gtk/gtksettings.c
+@@ -19,6 +19,7 @@
+ #include "config.h"
+ 
+ #include <string.h>
++#include <stdlib.h>
+ 
+ #include "gtksettings.h"
+ 
+@@ -1870,6 +1871,119 @@
+   return new_cascade;
+ }
+ 
++
++#ifdef G_OS_UNIX
++static gchar *user_css_path = NULL;
++static gchar *user_css_target = NULL;
++static GFileMonitor *user_css_monitor = NULL;
++static GFileMonitor *user_css_target_monitor = NULL;
++static GtkCssProvider *user_css_provider = NULL;
++static guint user_css_reload_id = 0;
++
++static void user_css_changed (GFileMonitor *monitor,
++                              GFile *file,
++                              GFile *other_file,
++                              GFileMonitorEvent event,
++                              gpointer data);
++
++static GFileMonitor *
++user_css_monitor_path (const gchar *path)
++{
++  GFile *file = g_file_new_for_path (path);
++  GFileMonitor *monitor =
++    g_file_monitor_file (file, G_FILE_MONITOR_WATCH_MOVES, NULL, NULL);
++
++  if (monitor)
++    g_signal_connect (monitor, "changed",
++                      G_CALLBACK (user_css_changed), NULL);
++
++  g_object_unref (file);
++  return monitor;
++}
++
++static void
++user_css_watch_target (void)
++{
++  gchar *target = realpath (user_css_path, NULL);
++  GFileMonitor *old;
++
++  if (target && strcmp (target, user_css_path) == 0)
++    {
++      free (target);
++      target = NULL;
++    }
++
++  if (g_strcmp0 (target, user_css_target) == 0)
++    {
++      free (target);
++      return;
++    }
++
++  old = user_css_target_monitor;
++  user_css_target_monitor =
++    target ? user_css_monitor_path (target) : NULL;
++
++  g_free (user_css_target);
++  user_css_target = g_strdup (target);
++  free (target);
++  g_clear_object (&old);
++}
++
++static gboolean
++user_css_reload (gpointer data)
++{
++  user_css_reload_id = 0;
++
++  if (g_file_test (user_css_path, G_FILE_TEST_IS_REGULAR))
++    gtk_css_provider_load_from_path (user_css_provider,
++                                     user_css_path, NULL);
++  else
++    gtk_css_provider_load_from_data (user_css_provider, "", 0, NULL);
++
++  g_object_notify (G_OBJECT (gtk_settings_get_default ()),
++                   "gtk-theme-name");
++
++  user_css_watch_target ();
++  return G_SOURCE_REMOVE;
++}
++
++static void
++user_css_changed (GFileMonitor *monitor,
++                  GFile *file,
++                  GFile *other_file,
++                  GFileMonitorEvent event,
++                  gpointer data)
++{
++  switch (event)
++    {
++    case G_FILE_MONITOR_EVENT_CHANGED:
++    case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
++    case G_FILE_MONITOR_EVENT_CREATED:
++    case G_FILE_MONITOR_EVENT_DELETED:
++    case G_FILE_MONITOR_EVENT_RENAMED:
++    case G_FILE_MONITOR_EVENT_MOVED_IN:
++    case G_FILE_MONITOR_EVENT_MOVED_OUT:
++      break;
++    default:
++      return;
++    }
++
++  if (user_css_reload_id)
++    g_source_remove (user_css_reload_id);
++
++  user_css_reload_id = g_timeout_add (150, user_css_reload, NULL);
++}
++
++static void
++user_css_watch (GtkCssProvider *provider, gchar *path)
++{
++  user_css_provider = provider;
++  user_css_path = path;
++  user_css_monitor = user_css_monitor_path (path);
++  user_css_watch_target ();
++}
++#endif
++
+ static void
+ settings_init_style (GtkSettings *settings)
+ {
+@@ -1891,7 +2005,11 @@
+                        G_FILE_TEST_IS_REGULAR))
+         gtk_css_provider_load_from_path (css_provider, css_path, NULL);
+ 
++#ifdef G_OS_UNIX
++      user_css_watch (css_provider, css_path);
++#else
+       g_free (css_path);
++#endif
+     }
+ 
+   cascade = _gtk_settings_get_style_cascade (settings, 1);

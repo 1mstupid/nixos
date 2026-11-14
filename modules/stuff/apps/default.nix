@@ -2,32 +2,41 @@
   self,
   moduleWithSystem,
   ...
-}:
-{
+}: {
   flake.nixosModules.apps = moduleWithSystem (
     {
       pkgs,
       inputs',
       ...
-    }:
-    let
+    }: let
       modules = with self.nixosModules; [
         steam
         quickshell
         umbriel
+        helium
         sddm
       ];
-    in
-    {
+    in {
       imports = modules;
       programs.appimage.enable = true;
       programs.appimage.binfmt = true;
       environment.systemPackages = with pkgs; [
-        inputs'.ayugram-desktop.packages.default
-        inputs'.zapfast.packages.default
-        inputs'.zen-browser.packages.twilight-official
+        (inputs'.zapfast.packages.default.overrideAttrs (old: {
+          nativeBuildInputs =
+            (old.nativeBuildInputs or [])
+            ++ [
+              pkgs.pkg-config
+            ];
+
+          buildInputs =
+            (old.buildInputs or [])
+            ++ [
+              pkgs.openssl
+              pkgs.sqlcipher
+            ];
+        }))
         libqalculate
-        (pkgs.callPackage ./../../../packages/materialious.nix { })
+        mpv-handler
       ];
     }
   );

@@ -1,8 +1,8 @@
-{ self, ... }: {
+{self, ...}: {
   flake.nixosModules.services = {
     imports = with self.nixosModules; [
       # flatpak
-      i2pd
+      # i2pd
       kmonad
       bittorrent
       komga

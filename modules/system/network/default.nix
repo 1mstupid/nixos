@@ -1,6 +1,6 @@
-{ moduleWithSystem, ... }: {
+{moduleWithSystem, ...}: {
   flake.nixosModules.network = moduleWithSystem (
-    { ... }: {
+    {...}: {
       networking.hostName = "waltz";
       networking.networkmanager = {
         enable = true;
@@ -25,8 +25,8 @@
         settings.Resolve = {
           DNSSEC = "true";
           DNSOverTLS = "opportunistic";
-          Domains = [ "~." ];
-          FallbackDNS = [ "8.8.8.8#dns.google" ];
+          Domains = ["~."];
+          FallbackDNS = ["8.8.8.8#dns.google"];
         };
       };
 
