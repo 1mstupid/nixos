@@ -26,10 +26,6 @@
         PasswordManagerEnabled = false;
         SyncDisabled = true;
         ExtensionInstallForcelist = [
-          "cjpalhdlnbpafiamejdnhcphjbkeiagm"
-          "eimadpbcbfnmbkopoojfekhnkhdbieeh"
-          "imnffafnaoooaedkhappfhomnnpigogk"
-          "nngceckbapebfimnlniiiahkandclblb"
         ];
       };
     };

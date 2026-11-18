@@ -16,10 +16,17 @@
       ];
     in {
       imports = modules;
+
+      programs.dconf.enable = true;
+
+      environment.pathsToLink = ["/share"];
+
       environment.systemPackages = with pkgs; [
         feh
         awww
         wf-recorder
+        gsettings-desktop-schemas
+        glib
         swayidle
         xdg-desktop-portal
         zenity

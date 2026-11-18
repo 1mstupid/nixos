@@ -1097,11 +1097,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1794580628,
-        "narHash": "sha256-BVg43RH4urcTdVOBNmMueOIOBNzzq98keb0qK2kLzFE=",
+        "lastModified": 1794833298,
+        "narHash": "sha256-2WZRDi26bQSnMY69p2v1w7oMVmhhY2xZFdIFGSlZ0ho=",
         "owner": "1mstupid",
         "repo": "nvim",
-        "rev": "681bc8c5c2eaaa6f8d5bbaa1110f93f7576a1ecb",
+        "rev": "d2219666ed381f6f89d32f7b189a38ede73bc5e2",
         "type": "github"
       },
       "original": {
@@ -1125,11 +1125,11 @@
     "quickshell": {
       "flake": false,
       "locked": {
-        "lastModified": 1794656776,
-        "narHash": "sha256-iFwr7zqU1xkmShViSA9WTuh4Vk7FnAJRcky3H1X8dgI=",
+        "lastModified": 1795034853,
+        "narHash": "sha256-XWBchQBsJF7Ad3OwsY/EqZn+hrPNoidsghb7lhTmiLI=",
         "owner": "1mstupid",
         "repo": "quickshell",
-        "rev": "11240d6f324061005e8346069a227d82f0618fb8",
+        "rev": "9be0070cca320b58f055f2b19fe19a55831fe094",
         "type": "github"
       },
       "original": {
@@ -1653,11 +1653,11 @@
         "umbriel": "umbriel_2"
       },
       "locked": {
-        "lastModified": 1794656393,
-        "narHash": "sha256-yr6zVj2nZ1ZUK7+MdMv0NcK9zMhUy7p10Jqtk34reQY=",
+        "lastModified": 1794824581,
+        "narHash": "sha256-hMA7L+SSBuGtqgAVfAbmv0o8wE//7CAXojOe98fcwZY=",
         "owner": "1mstupid",
         "repo": "umbriel",
-        "rev": "7ad91e38fa12074c9da73e162dc390e616b29cb4",
+        "rev": "37fc9de5845cde2dc3a9034d0e152a408671b064",
         "type": "github"
       },
       "original": {

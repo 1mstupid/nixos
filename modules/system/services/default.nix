@@ -4,7 +4,9 @@
       # flatpak
       # i2pd
       kmonad
-      bittorrent
+      rqbit
+      tailscale
+      # bittorrent
       komga
       # printing
       syncthing

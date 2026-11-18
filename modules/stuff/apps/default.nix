@@ -37,6 +37,7 @@
         }))
         libqalculate
         mpv-handler
+        (pkgs.callPackage ../../../packages/localsend-cli.nix {})
       ];
     }
   );

@@ -1,8 +1,14 @@
 {...}: {
   flake.nixosModules.variables = {pkgs, ...}: {
-    environment.sessionVariables.GH_CONFIG_DIR = "$HOME/.local/state/gh";
-    environment.sessionVariables.NH_FLAKE = "$HOME/Projects/nixos";
-    environment.sessionVariables.PULSE_COOKIE = "$HOME/.cache/pulse-cookie";
+    environment.sessionVariables = {
+      GH_CONFIG_DIR = "$HOME/.local/state/gh";
+      NH_FLAKE = "$HOME/Projects/nixos";
+      PULSE_COOKIE = "$HOME/.cache/pulse-cookie";
+
+      XDG_DATA_DIRS = [
+        "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
+      ];
+    };
 
     xdg.portal = {
       enable = true;
@@ -30,6 +36,7 @@
         };
       };
     };
+
     xdg.mime = {
       enable = true;
       defaultApplications = {
@@ -60,7 +67,7 @@
         "video/mpeg" = "mpv.desktop";
         "video/ogg" = "mpv.desktop";
         "video/quicktime" = "mpv.desktop";
-        "x-scheme-handler/mpv" = "mpv-url-handler.desktop"; # <--- Add this
+        "x-scheme-handler/mpv" = "mpv-url-handler.desktop";
         "video/webm" = "mpv.desktop";
         "video/x-flv" = "mpv.desktop";
         "video/x-matroska" = "mpv.desktop";
@@ -70,6 +77,7 @@
         "x-scheme-handler/https" = "helium.desktop";
       };
     };
+
     environment.etc."xdg/user-dirs.defaults".text = ''
       DESKTOP=Desktop
       DOWNLOAD=Downloads

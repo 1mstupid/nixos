@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 OUTPUT_DIR="$HOME/Videos/recordings"
 mkdir -p "$OUTPUT_DIR"
 
-# If wf-recorder is running, stop it and exit.
+# If wf-recorder is running, stop it cleanly and exit.
 if pgrep -x wf-recorder >/dev/null; then
     pkill -INT -x wf-recorder
     echo "Recording stopped."
@@ -13,16 +13,52 @@ if pgrep -x wf-recorder >/dev/null; then
 fi
 
 FILE="$OUTPUT_DIR/recording-$(date '+%Y-%m-%d_%H-%M-%S').mp4"
-
-# Get the current default output sink.
 SINK="$(pactl get-default-sink)"
-
-# Capture the monitor of that sink.
 MONITOR="${SINK}.monitor"
 
-echo "Output sink:  $SINK"
-echo "Audio source: $MONITOR"
-echo "Output file:  $FILE"
+echo "Sink:   $SINK"
+echo "Audio:  $MONITOR"
+echo "File:   $FILE"
+echo "Press Ctrl+C or run this script again to stop."
+echo ""
 
-# Start recording.
-wf-recorder -a"$MONITOR" -f "$FILE"
+# Start wf-recorder in the background, suppressing its noisy frame logs
+wf-recorder -a"$MONITOR" -f "$FILE" >/dev/null 2>&1 &
+REC_PID=$!
+
+# Ensure wf-recorder stops gracefully if the user presses Ctrl+C in this terminal
+cleanup() {
+    if kill -0 "$REC_PID" 2>/dev/null; then
+        kill -INT "$REC_PID"
+        wait "$REC_PID" 2>/dev/null || true
+    fi
+    printf "\n\nRecording saved to: %s\n" "$FILE"
+    exit 0
+}
+trap cleanup INT TERM
+
+START_TIME=$(date +%s)
+
+# Live status loop while wf-recorder is running
+while kill -0 "$REC_PID" 2>/dev/null; do
+    ELAPSED=$(( $(date +%s) - START_TIME ))
+    HOURS=$(( ELAPSED / 3600 ))
+    MINUTES=$(( (ELAPSED % 3600) / 60 ))
+    SECONDS=$(( ELAPSED % 60 ))
+
+    # Get human-readable file size if the file has been created yet
+    if [[ -f "$FILE" ]]; then
+        SIZE=$(du -h "$FILE" | cut -f1)
+    else
+        SIZE="0B"
+    fi
+
+    # \r overwrites the current line; \033[K clears trailing characters
+    printf "\r\033[K\033[1;31m● REC\033[0m | Time: %02d:%02d:%02d | Size: %s" \
+        "$HOURS" "$MINUTES" "$SECONDS" "$SIZE"
+
+    sleep 0.5
+done
+
+# Handles the case where wf-recorder was stopped externally (e.g., running the script again via a keybind)
+printf "\n\nRecording stopped and saved to: %s\n" "$FILE"
