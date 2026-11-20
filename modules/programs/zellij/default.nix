@@ -73,7 +73,7 @@
     };
 
     # zjstatus plugin
-    zjstatus = inputs.zjstatus.packages.${pkgs.system}.default;
+    zjstatus = inputs.zjstatus.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     # Layout
     layoutDir = pkgs.writeTextDir "layouts/default.kdl" ''

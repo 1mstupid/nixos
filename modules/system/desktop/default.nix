@@ -22,7 +22,6 @@
       environment.pathsToLink = ["/share"];
 
       environment.systemPackages = with pkgs; [
-        feh
         awww
         wf-recorder
         gsettings-desktop-schemas

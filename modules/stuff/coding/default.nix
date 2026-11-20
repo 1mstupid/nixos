@@ -19,7 +19,6 @@
     in {
       imports = modules;
       environment.systemPackages = with pkgs; [
-        yazi
         devenv
         gh
         fd

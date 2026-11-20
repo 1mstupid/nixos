@@ -10,11 +10,8 @@
       ...
     }: let
       modules = with self.nixosModules; [
-        steam
-        quickshell
-        umbriel
+        hyprland
         helium
-        sddm
       ];
     in {
       imports = modules;

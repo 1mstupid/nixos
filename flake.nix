@@ -4,9 +4,12 @@
     # nix
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
-    rust-overlay.url = "github:oxalica/rust-overlay";
 
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # San Francisco Fonts | Apple Fonts
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
     apple-fonts.inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +27,14 @@
       url = "github:1mstupid/umbriel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:1mstupid/hypr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    woomer = {
+      url = "github:voidarclabs/woomer";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ghost = {
       url = "github:vdbulcke/ghost";
       flake = false;
@@ -32,24 +43,30 @@
       url = "github:Nacho114/harpoon";
       flake = false;
     };
-    zjstatus.url = "github:dj95/zjstatus";
-    nova.url = "github:Yazelix/nova/stable";
-    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
-    quickshell.url = "github:1mstupid/quickshell";
-    quickshell.flake = false;
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nova = {
+      url = "github:Yazelix/nova/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    millennium = {
+      url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mpv.url = "github:1mstupid/mpv";
     mpv.flake = false;
-    nvim.url = "github:1mstupid/nvim";
+    nvim = {
+      url = "github:1mstupid/nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zapfast = {
       type = "github";
       owner = "crmne";
       repo = "zapfast";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ayugram-desktop = {
-      url = "git+https://github.com/ndfined-crp/ayugram-desktop?submodules=1";
-    };
-
     # flake-parts
     flake-parts.url = "github:hercules-ci/flake-parts";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";

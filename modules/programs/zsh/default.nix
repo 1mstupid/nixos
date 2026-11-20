@@ -57,7 +57,7 @@
         hm = "hx ~/dotfiles/modules/home/home.nix";
         flake = "hx ~/dotfiles/flake.nix";
         br = lib.getExe pkgs.broot;
-        rebuild = "cd ~/Projects/nixos 2>/dev/null && nh os switch --impure .#nixos-btw";
+        rebuild = "cd ~/Projects/nixos 2>/dev/null && nh os switch .#nixos-btw";
       };
 
       zshrc.content = ''

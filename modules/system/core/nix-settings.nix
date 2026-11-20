@@ -1,20 +1,16 @@
-{ inputs, ... }:
-{
-  perSystem = { system, ... }: {
+{inputs, ...}: {
+  perSystem = {system, ...}: {
     _module.args = {
       unfreePkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
-      };
-      unstablePkgs = import inputs.nixpkgs-unstable {
-        inherit system;
       };
       # Make flakeLocation universally addressable
       flakeLocation = builtins.getEnv "PWD";
     };
   };
 
-  flake.nixosModules.settings = { ... }: {
+  flake.nixosModules.settings = {...}: {
     programs.nh = {
       enable = true;
     };
@@ -36,7 +32,7 @@
         ];
         cores = 6;
         eval-cache = true;
-        nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
+        nix-path = ["nixpkgs=${inputs.nixpkgs}"];
         experimental-features = [
           "nix-command"
           "flakes"
@@ -54,13 +50,6 @@
     nixpkgs = {
       config = {
         allowUnfree = true;
-        packageOverrides = pkgs: {
-          unstable = import inputs.nixpkgs-unstable {
-            config = {
-              allowUnfree = true;
-            };
-          };
-        };
       };
     };
   };

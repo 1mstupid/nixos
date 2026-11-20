@@ -2,17 +2,20 @@
   inputs,
   moduleWithSystem,
   ...
-}:
-{
+}: {
   flake.nixosModules.alacritty = moduleWithSystem (
-    { self' }: {
+    {self'}: {
       environment.systemPackages = with self'.packages; [
         alacritty
       ];
     }
   );
 
-  perSystem = { pkgs, ... }: {
+  perSystem = {
+    pkgs,
+    self',
+    ...
+  }: {
     packages.alacritty = inputs.wrappers.wrappers.alacritty.wrap {
       inherit pkgs;
 
@@ -26,7 +29,7 @@
         };
 
         terminal.shell = {
-          program = "${pkgs.zsh}/bin/zsh";
+          program = "${self'.packages.zsh}/bin/zsh";
         };
 
         window = {
