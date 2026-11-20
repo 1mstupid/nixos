@@ -1509,11 +1509,11 @@
         "wrappers": "wrappers_3"
       },
       "locked": {
-        "lastModified": 1794833298,
-        "narHash": "sha256-2WZRDi26bQSnMY69p2v1w7oMVmhhY2xZFdIFGSlZ0ho=",
+        "lastModified": 1795199866,
+        "narHash": "sha256-2Ao+7XNVLYUlMQvDChGbzO3cImoTSN8C9/XN0PGnZ2M=",
         "owner": "1mstupid",
         "repo": "nvim",
-        "rev": "d2219666ed381f6f89d32f7b189a38ede73bc5e2",
+        "rev": "0f3828acce15c6c75b43e2ad4d3dc12ff3b17070",
         "type": "github"
       },
       "original": {
